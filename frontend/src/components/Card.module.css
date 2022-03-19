@@ -1,0 +1,13 @@
+.card-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+
+.word-input{
+    display:flex;
+}
+

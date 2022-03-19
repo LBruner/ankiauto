@@ -3,6 +3,7 @@ const path = require("path");
 const app = express();
 const puppeteer = require('puppeteer');
 const googleTTS = require('google-tts-api');
+const axios = require('axios');
 
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, '/views'))
@@ -16,9 +17,12 @@ app.get('/ankimate', (req, res) => {
 app.post('/ankimate', async (req, res) => {
     const data = await fetchData(req.body)
     const formatedData = await formatData(data);
-    const audioFile = getAudioFiles(formatedData.word, formatedData.language);
-    
-    console.log(formatedData, audioFile)
+    console.log(formatedData)
+    const audioFiles = getAudioFiles(formatedData);
+    //
+    // // console.log(formatedData, audioFiles)
+    const result = addCard({...formatedData, audioFiles})
+    // console.log(result)
 })
 
 
@@ -29,20 +33,24 @@ const fetchData = async (requestBody) => {
     const page = await browser.newPage();
     await page.setDefaultNavigationTimeout(0);
     await page.goto(dataUrl)
-    return await page.evaluate((language,word) => {
+    return await page.evaluate((language, word) => {
         let phonetic;
-        if (language === 'english')
+        if (language === 'english') {
             phonetic = document.querySelectorAll('.pronRH')[1].innerText;
-        else
+            language = 'en'
+        } else {
             phonetic = document.querySelectorAll('.pronWR')[0].innerText;
+            language = 'fr'
+        }
 
         return {
             word,
+            phrase: document.querySelectorAll('.FrEx')[0].innerText,
             translation: document.querySelectorAll('.ToWrd')[1].innerText,
             phonetic,
             language
         }
-    }, language,word);
+    }, language, word);
 }
 
 const getWordLocation = (body) => {
@@ -57,28 +65,73 @@ const getWordLocation = (body) => {
     dataUrl = dataUrl.concat('/' + word)
 
 
-    return {dataUrl, language,word};
+    return {dataUrl, language, word};
 }
 
 const formatData = async (data) => {
-    let {word, phonetic,language, translation} = data;
+    let {word, phonetic, language, translation, phrase} = data;
 
     translation = translation.split(' ')[0].toUpperCase();
     word = word.split(' ')[0].replace("'", "").toUpperCase();
     phonetic = phonetic.split(',')[0].replace("'", "")
 
-    return {word, phonetic, language,translation}
+    return {word, phonetic, language, translation, phrase}
 }
 
-const getAudioFiles =  (word,lang) =>{
-    console.log(word, lang)
-    const audioUrl = googleTTS.getAudioUrl(word, {
-        lang: lang === 'english' ? 'en' : 'fr',
-        slow: false,
-        host: 'https://translate.google.com',
+const getAudioFiles = (data) => {
+    const {word, lang, phrase} = data;
+    const getUrl = (searchTerm, lang) => googleTTS.getAudioUrl(searchTerm, {
+        lang: lang, slow: false, host: 'https://translate.google.com',
     });
+    const wordAudio = getUrl(word, lang);
+    const phraseAudio = getUrl(phrase, lang);
 
-    return audioUrl;
+    return {wordAudio, phraseAudio};
+}
+
+const addCard = async (data) => {
+    const {word, phrase, language, phonetic, translation, audioFiles} = data;
+    const {wordAudio, phraseAudio} = audioFiles;
+
+    const card = await axios.post('http://localhost:8765', {
+        "action": "addNote", "version": 6, "params": {
+            "note": {
+                "deckName": 'Test', "modelName": "Basic", "fields": {
+                    "Front": `${phrase}`,
+                    "Back": `<font color="#4a38d1">${word}</font> ${phonetic} <br> <font color="#4a38d1">${translation}</font>`
+                }, "options": {
+                    "allowDuplicate": false, "duplicateScope": "deck", "duplicateScopeOptions": {
+                        "deckName": "Test", "checkChildren": true, "checkAllModels": false
+                    }
+                }, "audio": [{
+                    "url": wordAudio,
+                    "filename": `${Math.random()}.mp3`,
+                    "skipHash": "7e2c2f954ef6051373ba916f000168dc",
+                    "fields": ["Back"]
+                }, {
+                    "url": phraseAudio,
+                    "filename": `${Math.random()}.mp3`,
+                    "skipHash": "7e2c2f954ef6051373ba916f000168dc",
+                    "fields": ["Front"]
+                }], // "video": [{
+                //     "url": "https://cdn.videvo.net/videvo_files/video/free/2015-06/small_watermarked/Contador_Glam_preview.mp4",
+                //     "filename": "countdown.mp4",
+                //     "skipHash": "4117e8aab0d37534d9c8eac362388bbe",
+                //     "fields": [
+                //         "Back"
+                //     ]
+                // }],
+                // "picture": [{
+                //     "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/A_black_cat_named_Tilly.jpg/220px-A_black_cat_named_Tilly.jpg",
+                //     "filename": "black_cat.jpg",
+                //     "skipHash": "8d6e4646dfae812bf39651b59d7429ce",
+                //     "fields": [
+                //         "Back"
+                //     ]
+                // }]
+            }
+        }
+    })
 }
 
 const port = 5000;
