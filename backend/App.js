@@ -4,37 +4,34 @@ const app = express();
 const puppeteer = require('puppeteer');
 const googleTTS = require('google-tts-api');
 const axios = require('axios');
-const stringSimilarity = require("string-similarity");
-
+const Card = require('./controllers/cardFunctions')
 
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, '/views'))
 app.use(express.urlencoded({extended: true}))
 app.use(express.json());
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
 
-
 app.get('/ankimate', (req, res) => {
     res.render('index')
 })
 
-app.post('/ankimate', async (req, res) => {
+app.post('/ankimate', async (req) => {
     const {words, language} = req.body
     console.log(words)
-    for (let word of words){
+    for (let word of words) {
         const data = await fetchData({language, word})
         // console.log(data)
         const formatedData = await formatData(data);
         const audioFiles = getAudioFiles(formatedData);
-        const result = addCard({...formatedData, audioFiles})
+        await addCard({...formatedData, audioFiles})
     }
 })
-
 
 const fetchData = async (requestBody) => {
     const {dataUrl, language, word} = getWordLocation(requestBody);
@@ -89,7 +86,7 @@ const formatData = async (data) => {
 
 const getAudioFiles = (data) => {
     const {word, language, phrase} = data;
-    const getUrl = (searchTerm, lang) => googleTTS.getAudioUrl(searchTerm, {
+    const getUrl = (searchTerm) => googleTTS.getAudioUrl(searchTerm, {
         lang: language, slow: false, host: 'https://translate.google.com',
     });
     const wordAudio = getUrl(word, language);
@@ -99,52 +96,8 @@ const getAudioFiles = (data) => {
 }
 
 const addCard = async (data) => {
-    const {word, phrase, language, phonetic, translation, audioFiles} = data;
-    const {wordAudio, phraseAudio} = audioFiles;
-
-    const splitedPhrase = phrase.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '').split(' ')
-    
-    const {bestMatch} = stringSimilarity.findBestMatch(word.toLowerCase(), splitedPhrase);
-    const matchWord = bestMatch.target;
-    const card = await axios.post('http://localhost:8765', {
-        "action": "addNote", "version": 6, "params": {
-            "note": {
-                "deckName": 'Test', "modelName": "Basic", "fields": {
-                    "Front": `${`${phrase.replace(matchWord,`<font color="#4a38d1">${matchWord}</font>`)}`}`,
-                    "Back": `<font color="#4a38d1">${word}</font> ${phonetic} <br> <font color="#4a38d1">${translation}</font>`
-                }, "options": {
-                    "allowDuplicate": false, "duplicateScope": "deck", "duplicateScopeOptions": {
-                        "deckName": "Test", "checkChildren": true, "checkAllModels": false
-                    }
-                }, "audio": [{
-                    "url": wordAudio,
-                    "filename": `${Math.random()}.mp3`,
-                    "skipHash": "7e2c2f954ef6051373ba916f000168dc",
-                    "fields": ["Back"]
-                }, {
-                    "url": phraseAudio,
-                    "filename": `${Math.random()}.mp3`,
-                    "skipHash": "7e2c2f954ef6051373ba916f000168dc",
-                    "fields": ["Front"]
-                }], // "video": [{
-                //     "url": "https://cdn.videvo.net/videvo_files/video/free/2015-06/small_watermarked/Contador_Glam_preview.mp4",
-                //     "filename": "countdown.mp4",
-                //     "skipHash": "4117e8aab0d37534d9c8eac362388bbe",
-                //     "fields": [
-                //         "Back"
-                //     ]
-                // }],
-                // "picture": [{
-                //     "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/A_black_cat_named_Tilly.jpg/220px-A_black_cat_named_Tilly.jpg",
-                //     "filename": "black_cat.jpg",
-                //     "skipHash": "8d6e4646dfae812bf39651b59d7429ce",
-                //     "fields": [
-                //         "Back"
-                //     ]
-                // }]
-            }
-        }
-    })
+    const cardData = new Card({...data});
+    await axios.post('http://localhost:8765', cardData)
 }
 
 const port = 5000;
