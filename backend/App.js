@@ -4,7 +4,8 @@ const app = express();
 const puppeteer = require('puppeteer');
 const googleTTS = require('google-tts-api');
 const axios = require('axios');
-const cors = require('cors');
+const stringSimilarity = require("string-similarity");
+
 
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, '/views'))
@@ -101,11 +102,15 @@ const addCard = async (data) => {
     const {word, phrase, language, phonetic, translation, audioFiles} = data;
     const {wordAudio, phraseAudio} = audioFiles;
 
+    const splitedPhrase = phrase.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '').split(' ')
+    
+    const {bestMatch} = stringSimilarity.findBestMatch(word.toLowerCase(), splitedPhrase);
+    const matchWord = bestMatch.target;
     const card = await axios.post('http://localhost:8765', {
         "action": "addNote", "version": 6, "params": {
             "note": {
                 "deckName": 'Test', "modelName": "Basic", "fields": {
-                    "Front": `${phrase.replace(word, `<font color="#4a38d1">${word}</font>`)}`,
+                    "Front": `${`${phrase.replace(matchWord,`<font color="#4a38d1">${matchWord}</font>`)}`}`,
                     "Back": `<font color="#4a38d1">${word}</font> ${phonetic} <br> <font color="#4a38d1">${translation}</font>`
                 }, "options": {
                     "allowDuplicate": false, "duplicateScope": "deck", "duplicateScopeOptions": {
