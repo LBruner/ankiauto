@@ -34,6 +34,15 @@
   background-color: red;
 }
 
+.cardPickers{
+  display: flex;
+  width: 100%;
+}
+
+.cardPickers > select:nth-child(2){
+  background-color: aliceblue;
+}
+
 .loader {
   border: 16px solid #c7c7c7;
   border-top: 16px solid rgba(255, 255, 255, 0.73);

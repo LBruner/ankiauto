@@ -11,6 +11,7 @@ function App() {
     const [wordsForm, setWordsForm] = useState([])
     const [isWaiting, setIsWaiting] = useState(false);
     const language = useRef();
+    const deck = useRef();
 
     useEffect(() => {
         axios.post('http://localhost:5000/ankimate')
@@ -51,10 +52,16 @@ function App() {
         <Card>
             {!isWaiting &&
                 <form style={{width: '40%'}} onSubmit={onSubmitHandler}>
-                    <div className="mb-3">
+                    <div className="mb-3 cardPickers">
                         <select defaultValue="english" ref={language} className="form-select form-select-lg mb-3"
                                 aria-label=".form-select-lg example">
                             <option>Pick a language</option>
+                            <option value="english">English</option>
+                            <option value="french">French</option>
+                        </select>
+                        <select defaultValue="english" ref={deck} className="form-select form-select-lg mb-3"
+                                aria-label=".form-select-lg example">
+                            <option>Deck</option>
                             <option value="english">English</option>
                             <option value="french">French</option>
                         </select>
