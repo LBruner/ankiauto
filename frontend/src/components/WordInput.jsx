@@ -2,12 +2,10 @@ import {useRef, useState} from "react";
 import './WordInput.css'
 
 const WordInput = (props) => {
-    const [word, setWord] = useState(' ')
     const [isInputAdded, setIsInputAdded] = useState(false)
     const input = useRef();
     
     const onChangeHandler = ()=>{
-        setWord(input.current.value)
         props.onUpdateWord(input.current.value, props.index)
         if(!isInputAdded || props.isFirst){
             props.addInput()
