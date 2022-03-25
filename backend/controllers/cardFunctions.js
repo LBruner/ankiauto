@@ -3,7 +3,7 @@ const Card = require("../Classes/Card");
 const axios = require("axios");
 
 module.exports.processCards = async (req, puppetter) => {
-    const {words, language} = req.body;
+    const {words, language,deck = language} = req.body;
     const addedWords = {successfull: [], error: {'words': [], log: []}};
 
     for (let word of words) {
@@ -11,13 +11,14 @@ module.exports.processCards = async (req, puppetter) => {
             const data = await fetchData({language, word}, puppetter)
             const formatedData = await formatData(data);
             const audioFiles = getAudioFiles(formatedData);
-            await addCard({...formatedData, audioFiles})
+            await addCard({...formatedData, audioFiles,deck})
             addedWords.successfull.push(word);
         } catch (error) {
             addedWords.error.words.push(word);
             console.log(error)
         }
     }
+    console.log(addedWords)
     return addedWords;
 }
 

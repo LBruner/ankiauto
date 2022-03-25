@@ -1,20 +1,21 @@
-//    // const {word, phrase, phonetic, translation, audioFiles} = data;
 const stringSimilarity = require("string-similarity");
 
 function Card(data){
-    const {word, phrase, phonetic, translation, audioFiles} = data;
+    const {word, phrase, phonetic, translation, audioFiles,deck} = data;
     const {wordAudio, phraseAudio} = audioFiles;
 
     const splitedPhrase = phrase.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '').split(' ')
 
     const {bestMatch} = stringSimilarity.findBestMatch(word.toLowerCase(), splitedPhrase);
     const matchWord = bestMatch.target;
+
+    console.log(deck)
     
     return {"action": "addNote", "version": 6, "params": {
     "note": {
-        "deckName": 'Test', "modelName": "Basic", "fields": {
+        "deckName": deck, "modelName": "Basic", "fields": {
             "Front": `${phrase.replace(matchWord,`<font color="#4a38d1">${matchWord}</font>`)}`,
-                "Back": `<font color="#4a38d1">${word}</font> ${phonetic} <br> <font color="#4a38d1">${translation}</font>`
+                "Back": `<font color="#4a38d1">${word}</font> ${phonetic} <br><b>${translation}</b>`
         }, "options": {
             "allowDuplicate": false, "duplicateScope": "deck", "duplicateScopeOptions": {
                 "deckName": "Test", "checkChildren": true, "checkAllModels": false
