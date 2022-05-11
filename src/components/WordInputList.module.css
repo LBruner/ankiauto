@@ -1,0 +1,10 @@
+.form-container{
+    display: grid;
+    grid-auto-rows: auto;
+    grid-auto-columns: 50%;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    grid-gap: 10px;
+    justify-items: center;
+}

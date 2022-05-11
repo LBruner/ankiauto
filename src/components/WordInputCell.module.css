@@ -1,0 +1,23 @@
+.cell-container{
+    display: grid;
+    grid-template-columns: 30% 60% 10%;
+    width: 100%;
+    font-size: 18px;
+}
+
+.cell-container *{
+    padding: 11px;
+}
+
+.cell-container button{
+    display: block;
+    margin: auto;
+    font-size: 15px;
+    background-color: #e5545b;
+    border-radius: 0 7px 7px 0;
+    border: none
+}
+
+.isDisabled{
+    background-color: #ccc !important;
+}

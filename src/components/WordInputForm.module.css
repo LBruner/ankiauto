@@ -1,0 +1,38 @@
+.button-container{
+    width: 50%;
+    display: block;
+    margin: 10px auto;
+    padding: 15px;
+    font-size: 15px;
+    border-radius: 8px;
+    background-color: #02aef0;
+    border: none;
+}
+
+.language-container{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.language-container h1{
+    font-size: 35px;
+}
+.language-buttons{
+    width: 36%;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.language-buttons button{
+    border-radius: 5px;
+    border: none;
+    padding: 20px;
+    width: 50%;
+}
+
+.selected-language{
+    background-color: #2fe5b2;
+}
