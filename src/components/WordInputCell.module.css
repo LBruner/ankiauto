@@ -1,7 +1,7 @@
 .cell-container{
     display: grid;
-    grid-template-columns: 30% 60% 10%;
-    width: 100%;
+    grid-template-columns: 15% 60% 15% 10%;
+    width: 70%;
     font-size: 18px;
 }
 
@@ -10,6 +10,7 @@
 }
 
 .cell-container button{
+    width: 100%;
     display: block;
     margin: auto;
     font-size: 15px;
@@ -20,4 +21,11 @@
 
 .isDisabled{
     background-color: #ccc !important;
+}
+
+
+@media (max-width: 800px) {
+    .cell-container {
+        width: 100%;
+    }
 }

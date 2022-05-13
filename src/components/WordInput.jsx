@@ -5,9 +5,13 @@ const WordInput = (props) => {
     const [isInputAdded, setIsInputAdded] = useState(false)
     const input = useRef();
     const phrase = useRef();
-    console.log(props.isFirst)
+    const meaning = useRef();
     const onChangeHandler = ()=>{
-        props.onUpdateWord({word: input.current.value, phrase: phrase.current.value }, props.index)
+        props.onUpdateWord(
+            {word: input.current.value, 
+                phrase: phrase.current.value, 
+                meaning: meaning.current.value
+            }, props.index)
         
         if(!isInputAdded || props.isFirst){
             props.addInput()
@@ -19,12 +23,13 @@ const WordInput = (props) => {
         props.deleteInput(props.index)
     }
 
-    const isDisabled =  props.isFirst ? 'disabled' : '';
     return (
         <div className={classes['cell-container']}>
             <input onChange={onChangeHandler} type="text" tabIndex={1} className="form-control" id="exampleInputPassword1" ref={input} placeholder={"Word..."}
             /> 
             <input onChange={onChangeHandler} type="text" tabIndex={1} className="form-control" id="exampleInputPassword1" ref={phrase} placeholder={"Phrase..."}
+            />
+            <input onChange={onChangeHandler} type="text" tabIndex={1} className="form-control" id="exampleInputPassword1" ref={meaning} placeholder={"Meaning..."}
             />
             <button onClick={onClickHandler} type="button" tabIndex={0} className={`${classes['cell-container']} ${props.isFirst ? classes['isDisabled'] : ''}`}>x</button>
         </div>

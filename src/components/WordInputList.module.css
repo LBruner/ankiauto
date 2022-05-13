@@ -1,10 +1,16 @@
 .form-container{
     display: grid;
     grid-auto-rows: auto;
-    grid-auto-columns: 50%;
+    grid-auto-columns:70%;
     align-content: center;
     justify-content: center;
     align-items: center;
     grid-gap: 10px;
     justify-items: center;
+}
+
+@media (max-width: 800px) {
+    .form-container{
+        grid-auto-columns:95%;
+    }
 }

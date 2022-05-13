@@ -9,7 +9,7 @@ const WordInputForm = () => {
     const dispatch = useDispatch();
     const [wordsForm, setWordsForm] = useState([])
     const [language, setLanguage] = useState('english');
-
+    console.log(wordsForm)
     const selectEnglish = (e) =>{
         e.preventDefault();
         setLanguage('english')
@@ -31,7 +31,7 @@ const WordInputForm = () => {
     }
 
     return (
-        <form onSubmit={onSubmitHandler}>
+        <form onSubmit={onSubmitHandler} autoComplete={"off"}>
             <div className={classes['language-container']}>
                 <h1>Choose Language</h1>
                 <div className={classes['language-buttons']}>
