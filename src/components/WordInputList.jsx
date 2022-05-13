@@ -22,6 +22,10 @@ const WordInputList = (props) => {
         let newArray = [...wordInputCount];
         newArray = newArray.filter(curItem => curItem !== wordInputCount[index])
         setWordInputCount(newArray)
+        let newFormArray = [];
+        newFormArray = wordsForm.filter((item,i) => i !== index)
+        setWordsForm(newFormArray);
+        console.log('OI',newFormArray);
     }
 
     const isFirstElement = (curInput) => {

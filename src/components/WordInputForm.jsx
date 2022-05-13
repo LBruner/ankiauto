@@ -1,4 +1,4 @@
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import WordInputList from "./WordInputList";
 import axios from 'axios'
 import classes from './WordInputForm.module.css';
@@ -9,7 +9,12 @@ const WordInputForm = () => {
     const dispatch = useDispatch();
     const [wordsForm, setWordsForm] = useState([])
     const [language, setLanguage] = useState('english');
-    console.log(wordsForm)
+
+    useEffect(() => {
+        console.log(wordsForm)
+    }, [wordsForm]);
+    
+    
     const selectEnglish = (e) =>{
         e.preventDefault();
         setLanguage('english')
