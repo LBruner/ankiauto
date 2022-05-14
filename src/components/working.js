@@ -7,7 +7,6 @@ const WordInputList = (props) => {
     const {wordsForm, setWordsForm} = props;
     const [wordInputCount, setWordInputCount] = useState([''])
 
-
     const onUpdateWord = (input, index) => {
         let newArray = [...wordsForm];
         newArray[index] = input;
@@ -28,16 +27,17 @@ const WordInputList = (props) => {
         setWordsForm(newFormArray);
     }
 
-    const isFirstElement = (curInput) => {
-        return wordInputCount[0] === curInput && wordInputCount.length <= 1
-    }
     const render = wordInputCount.map((curInput, i) =>
         <WordInput
             key={wordInputCount[i]} addInput={addInput}
             index={i} isFirst={isFirstElement(curInput)}
             deleteInput={deleteInput} onUpdateWord={onUpdateWord}
-            isInvalid={props.invalidIds.includes(i)}
+            inInvalid={props.invalidIds.includes(i)}
         />)
+
+    const isFirstElement = (curInput) => {
+        return wordInputCount[0] === curInput && wordInputCount.length <= 1
+    }
 
     return (
         <div className={classes['form-container']}>

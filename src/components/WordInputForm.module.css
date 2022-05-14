@@ -37,6 +37,10 @@
     background-color: #2fe5b2;
 }
 
+.invalid{
+    background-color: #ccc;
+}
+
 @media (max-width: 800px) {
     .language-buttons{
         width: 60%;

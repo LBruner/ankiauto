@@ -23,6 +23,11 @@
     background-color: #ccc !important;
 }
 
+.not-valid{
+    background-color: rgb(235 0 0 / 23%);
+    border-color: #ffffff00;
+}
+
 
 @media (max-width: 800px) {
     .cell-container {
