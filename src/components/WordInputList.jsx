@@ -7,7 +7,6 @@ const WordInputList = (props) => {
     const {wordsForm, setWordsForm} = props;
     const [wordInputCount, setWordInputCount] = useState([''])
 
-
     const onUpdateWord = (input, index) => {
         let newArray = [...wordsForm];
         newArray[index] = input;
@@ -27,6 +26,14 @@ const WordInputList = (props) => {
         newFormArray = wordsForm.filter((item, i) => i !== index)
         setWordsForm(newFormArray);
     }
+
+    useEffect(() => {
+    if(props.deletingIds){
+        const newArray = wordInputCount.filter((word,i) => !props.deletingIds.includes(i))
+        props.setDeletingIds(null);
+        setWordInputCount(newArray)
+    }}, [props.deletingIds]);
+    
 
     const isFirstElement = (curInput) => {
         return wordInputCount[0] === curInput && wordInputCount.length <= 1

@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import WordInputList from "./WordInputList";
 import axios from 'axios'
 import classes from './WordInputForm.module.css';
@@ -10,17 +10,19 @@ const WordInputForm = () => {
     const [wordsForm, setWordsForm] = useState([])
     const [language, setLanguage] = useState('english');
     const [invalidIds, setInvalidIds] = useState([]);
+    const [deletingIds, setDeletingIds] = useState([]);
     const [isFormValid, setIsFormValid] = useState(false);
 
-    const checkFormValidity = () => {
+    const checkFormValidity = useCallback(() => {
         const newArray = [];
         wordsForm.forEach((item, i) => {
             if (item.word === '')
                 newArray.push(i)
         })
-        setIsFormValid(newArray.length === 0);
+        console.log(wordsForm)
+        setIsFormValid(newArray.length === 0 && wordsForm.length !== 0);
         setInvalidIds(newArray)
-    }
+    }, [wordsForm])
 
     useEffect(() => {
         checkFormValidity();
@@ -50,7 +52,7 @@ const WordInputForm = () => {
 
         const errorNumber = data.cardsLog.errors.length;
         const successNumber = data.cardsLog.successful.length;
-        
+
         if (errorNumber === 0) {
             dispatch(uiActions.showNotification(
                 {
@@ -60,8 +62,7 @@ const WordInputForm = () => {
                         status: 'success'
                     }
                 }))
-        }
-        else if(errorNumber !== 0 && successNumber !== 0){
+        } else if (errorNumber !== 0 && successNumber !== 0) {
             dispatch(uiActions.showNotification(
                 {
                     notification: {
@@ -70,8 +71,7 @@ const WordInputForm = () => {
                         status: 'alert'
                     }
                 }))
-        }
-        else{
+        } else {
             dispatch(uiActions.showNotification(
                 {
                     notification: {
@@ -81,7 +81,24 @@ const WordInputForm = () => {
                     }
                 }))
         }
-        console.log(data)
+
+        console.log('log', data.cardsLog)
+        console.log('form', wordsForm)
+        let deleteIds = []
+        
+        const newFormArray = wordsForm.filter((word, i) => {
+            if (!data.cardsLog.successful.includes(word.word)) {
+                return true
+            } else {
+                deleteIds.push(i);
+                return false
+            }
+        })
+        if(deleteIds.length !== 0) setDeletingIds(deleteIds);
+        
+        console.log('results', newFormArray)
+        console.log('logic', !data.cardsLog.successful.includes('Smile'))
+        setWordsForm(newFormArray)
         dispatch(uiActions.toggleIsWaiting());
     }
 
@@ -98,7 +115,7 @@ const WordInputForm = () => {
                     </button>
                 </div>
             </div>
-            <WordInputList wordsForm={wordsForm} setWordsForm={setWordsForm} invalidIds={invalidIds}/>
+            <WordInputList deletingIds={deletingIds} setDeletingIds={setDeletingIds} wordsForm={wordsForm} setWordsForm={setWordsForm} invalidIds={invalidIds}/>
             <button className={`${classes['button-container']} ${!isFormValid ? classes['invalid'] : ''}`}
                     type={"submit"}>Add Cards
             </button>
