@@ -3,17 +3,12 @@ import {useSelector} from "react-redux";
 import Card from "../src/components/Card";
 import Head from "next/head";
 import classes from '../src/components/loader.module.css'
+import Notification from "../src/UI/Notification";
 
 const HomePage = () => {
     const isWaiting = useSelector(state => state.ui.isWaiting)
-    //
-    // if (isWaiting) {
-    //     return (
-    //         <div className="center">
-    //             <div className="loader"></div>
-    //         </div>
-    //     )
-    // }
+    const notification = useSelector(state => state.ui.activeNotification)
+    const showNotification = useSelector(state => state.ui.showNotification)
     return (
         <>
             <Head>
@@ -28,6 +23,9 @@ const HomePage = () => {
             <Card>
                 <WordInputForm/>
             </Card>
+            {showNotification &&
+                <Notification notification={notification}/>
+            }
         </>
     )
 }

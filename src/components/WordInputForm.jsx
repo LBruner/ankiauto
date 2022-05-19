@@ -11,7 +11,7 @@ const WordInputForm = () => {
     const [language, setLanguage] = useState('english');
     const [invalidIds, setInvalidIds] = useState([]);
     const [isFormValid, setIsFormValid] = useState(false);
-    
+
     const checkFormValidity = () => {
         const newArray = [];
         wordsForm.forEach((item, i) => {
@@ -25,7 +25,7 @@ const WordInputForm = () => {
     useEffect(() => {
         checkFormValidity();
     }, [wordsForm]);
-    
+
 
     const selectEnglish = (e) => {
         e.preventDefault();
@@ -47,6 +47,41 @@ const WordInputForm = () => {
         const words = {words: [...wordsForm], language: language};
         const response = await axios.post(url, words)
         const {data} = response;
+
+        const errorNumber = data.cardsLog.errors.length;
+        const successNumber = data.cardsLog.successful.length;
+        
+        if (errorNumber === 0) {
+            dispatch(uiActions.showNotification(
+                {
+                    notification: {
+                        title: `${data.cardsLog.successful.length} cards were added!`,
+                        message: 'No errors',
+                        status: 'success'
+                    }
+                }))
+        }
+        else if(errorNumber !== 0 && successNumber !== 0){
+            dispatch(uiActions.showNotification(
+                {
+                    notification: {
+                        title: `${data.cardsLog.successful.length} cards were added!`,
+                        message: `${errorNumber} cards were not added`,
+                        status: 'alert'
+                    }
+                }))
+        }
+        else{
+            dispatch(uiActions.showNotification(
+                {
+                    notification: {
+                        title: `Any card were added`,
+                        message: `Something went wrong`,
+                        status: 'error'
+                    }
+                }))
+        }
+        console.log(data)
         dispatch(uiActions.toggleIsWaiting());
     }
 
@@ -64,7 +99,9 @@ const WordInputForm = () => {
                 </div>
             </div>
             <WordInputList wordsForm={wordsForm} setWordsForm={setWordsForm} invalidIds={invalidIds}/>
-            <button className={`${classes['button-container']} ${!isFormValid ? classes['invalid'] : ''}`} type={"submit"}>Add Cards</button>
+            <button className={`${classes['button-container']} ${!isFormValid ? classes['invalid'] : ''}`}
+                    type={"submit"}>Add Cards
+            </button>
         </form>)
 }
 

@@ -7,12 +7,7 @@ const WordInput = (props) => {
     const input = useRef();
     const phrase = useRef();
     const meaning = useRef();
-
-    // let isValid = true;
-    //
-    //
-    // if(input.current)
-    //     isValid = input.current.value !== '';
+    
     const onChangeHandler = ()=>{
         props.onUpdateWord(
             {word: input.current.value, 

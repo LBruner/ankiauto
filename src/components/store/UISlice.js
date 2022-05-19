@@ -2,7 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 
 const uiSlice = createSlice({
     name: 'notification', initialState: {
-        activeNotification: null, 
+        activeNotification: null,
         showNotification: false,
         isWaiting: false
     }, reducers: {
@@ -10,11 +10,12 @@ const uiSlice = createSlice({
             state.showNotification = true;
             const {notification} = action.payload;
             state.activeNotification = notification;
-        }, hideNotification(state) {
+        },
+        hideNotification(state) {
             state.showNotification = false;
             state.activeNotification = null;
         },
-        toggleIsWaiting(state,action){
+        toggleIsWaiting(state, action) {
             state.isWaiting = !state.isWaiting;
         }
     }
