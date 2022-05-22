@@ -4,7 +4,8 @@ const uiSlice = createSlice({
     name: 'notification', initialState: {
         activeNotification: null,
         showNotification: false,
-        isWaiting: false
+        isWaiting: false,
+        useDarkMode: false
     }, reducers: {
         showNotification(state, action) {
             state.showNotification = true;

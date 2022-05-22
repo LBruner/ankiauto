@@ -19,7 +19,6 @@ const WordInputForm = () => {
             if (item.word === '')
                 newArray.push(i)
         })
-        console.log(wordsForm)
         setIsFormValid(newArray.length === 0 && wordsForm.length !== 0);
         setInvalidIds(newArray)
     }, [wordsForm])
@@ -27,8 +26,7 @@ const WordInputForm = () => {
     useEffect(() => {
         checkFormValidity();
     }, [wordsForm]);
-
-
+    
     const selectEnglish = (e) => {
         e.preventDefault();
         setLanguage('english')
@@ -44,12 +42,13 @@ const WordInputForm = () => {
 
         if (!isFormValid) return;
 
+        dispatch(uiActions.hideNotification())
         dispatch(uiActions.toggleIsWaiting());
         const url = '/api/addCards';
         const words = {words: [...wordsForm], language: language};
         const response = await axios.post(url, words)
         const {data} = response;
-
+    
         const errorNumber = data.cardsLog.errors.length;
         const successNumber = data.cardsLog.successful.length;
 
@@ -81,9 +80,6 @@ const WordInputForm = () => {
                     }
                 }))
         }
-
-        console.log('log', data.cardsLog)
-        console.log('form', wordsForm)
         let deleteIds = []
         
         const newFormArray = wordsForm.filter((word, i) => {
@@ -96,8 +92,6 @@ const WordInputForm = () => {
         })
         if(deleteIds.length !== 0) setDeletingIds(deleteIds);
         
-        console.log('results', newFormArray)
-        console.log('logic', !data.cardsLog.successful.includes('Smile'))
         setWordsForm(newFormArray)
         dispatch(uiActions.toggleIsWaiting());
     }

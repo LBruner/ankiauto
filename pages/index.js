@@ -9,6 +9,7 @@ const HomePage = () => {
     const isWaiting = useSelector(state => state.ui.isWaiting)
     const notification = useSelector(state => state.ui.activeNotification)
     const showNotification = useSelector(state => state.ui.showNotification)
+
     return (
         <>
             <Head>
