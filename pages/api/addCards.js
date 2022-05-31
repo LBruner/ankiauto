@@ -1,25 +1,49 @@
 import {launchPuppeteer} from "../../lib/puppetterHelper";
-import addedPosts from "../../lib/addedPosts";
+import * as path from "path";
+import {readFile, writeFile} from 'fs/promises';
+
+const addedPostsPath = path.resolve(__dirname, process.cwd(), 'lib', 'addedPosts.json')
 
 export default async function handler(req, res) {
     const {page, browser} = await launchPuppeteer();
+
     if (req.method === 'POST') {
 
-        let allPagePosts = await getPostsPerPage(1, page)
+        let filteredPosts = await fetchNewPosts(page);
 
-        let filteredPosts = await filterPosts([], allPagePosts, 1, page);
+        const postsData = await getPostsData(filteredPosts);
+        
         console.log(filteredPosts)
+        console.log(postsData)
+        await browser.close();
         res.json({message: 'success!'})
     }
-    await browser.close();
+}
+
+async function getPostsData(posts){
+    
+}
+
+async function fetchNewPosts(page) {
+    let allPagePosts = await getPostsPerPage(1, page)
+
+    let filteredPosts = await filterPosts([], allPagePosts, 1, page);
+
+    if (filteredPosts.length !== 0)
+        await recordAddedPost(filteredPosts[0], addedPostsPath);
+    
+    return filteredPosts;
 }
 
 async function filterPosts(filteredPosts, allPagePosts, pageIndex, puppeteer) {
     let newArray;
     let isAdded = false;
+
+    const lastPostTitle = await readLatestAddedPost()
+
     allPagePosts.forEach((post, i) => {
         if (!isAdded) {
-            if (post.title === addedPosts.lastPost) {
+            if (post.title === lastPostTitle) {
                 newArray = allPagePosts.slice(0, i);
                 isAdded = true;
             } else {
@@ -54,4 +78,16 @@ async function fetchPosts(puppeteer, url) {
 
         return data;
     });
+}
+
+async function readLatestAddedPost() {
+    const post = await readFile(addedPostsPath, 'utf-8');
+    const data = JSON.parse(post);
+    return data.title;
+}
+
+async function recordAddedPost(filteredPost) {
+    const postTitle = JSON.stringify({title: filteredPost.title})
+
+    await writeFile(addedPostsPath, postTitle, {flag: 'w'})
 }
