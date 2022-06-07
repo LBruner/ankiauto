@@ -1,6 +1,7 @@
 import {uiActions} from "../components/store/UISlice";
 import classes from './Notification.module.css';
 import {useDispatch} from "react-redux";
+import Timer from "./Timer";
 
 const Notification = (props) => {
     const {title,message,status} = props.notification;
@@ -28,7 +29,9 @@ const Notification = (props) => {
     return (
         <div className={activeClasses} onClick={onClickHandler}>
             <h2>{title}</h2>
-            <p>{message}</p>
+            <Timer class={'timer'}/>
+            <h4>{message}</h4>
+            
         </div>
     );
 };

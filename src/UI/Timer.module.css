@@ -1,0 +1,15 @@
+.timer {
+    text-align: center;
+    font-size: 15px;
+}
+
+.modal{
+    position: absolute;
+    transform: translateY(159px);
+    padding: 76px;
+    font-size: 23px;
+    text-align: center;
+    color: white;
+    font-weight: 600;
+    border-radius: 5px;
+}

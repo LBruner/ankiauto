@@ -5,7 +5,7 @@ import classes from './WordInputForm.module.css';
 import {useDispatch} from "react-redux";
 import {uiActions} from "./store/UISlice";
 
-const WordInputForm = () => {
+const WordInputForm = (props) => {
     const dispatch = useDispatch();
     const [wordsForm, setWordsForm] = useState([])
     const [language, setLanguage] = useState('english');
@@ -48,10 +48,11 @@ const WordInputForm = () => {
         const words = {words: [...wordsForm], language: language};
         const response = await axios.post(url, words)
         const {data} = response;
-    
         const errorNumber = data.cardsLog.errors.length;
         const successNumber = data.cardsLog.successful.length;
-
+        
+        props.resetTimer(0);
+        
         if (errorNumber === 0) {
             dispatch(uiActions.showNotification(
                 {

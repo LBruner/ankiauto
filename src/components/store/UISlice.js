@@ -5,7 +5,8 @@ const uiSlice = createSlice({
         activeNotification: null,
         showNotification: false,
         isWaiting: false,
-        useDarkMode: false
+        useDarkMode: false,
+        timer: 0
     }, reducers: {
         showNotification(state, action) {
             state.showNotification = true;
@@ -16,8 +17,11 @@ const uiSlice = createSlice({
             state.showNotification = false;
             state.activeNotification = null;
         },
-        toggleIsWaiting(state, action) {
+        toggleIsWaiting(state) {
             state.isWaiting = !state.isWaiting;
+        },
+        setTimer(state,action){
+            state.timer = action.payload.timer;
         }
     }
 })
