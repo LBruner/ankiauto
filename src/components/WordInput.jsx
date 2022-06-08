@@ -34,6 +34,7 @@ const WordInput = (props) => {
             <input onChange={onChangeHandler} type="text" tabIndex={1} ref={meaning} placeholder={"Meaning..."}
             />
             <button onClick={onClickHandler} type="button" tabIndex={0} className={`${classes['cell-container']} ${props.isFirst ? classes['isDisabled'] : ''}`}>x</button>
+            <button onClick={onClickHandler} type="submit" style={{display: 'none'}}></button>
         </div>
     )
 }

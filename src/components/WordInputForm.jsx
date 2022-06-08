@@ -13,6 +13,12 @@ const WordInputForm = (props) => {
     const [deletingIds, setDeletingIds] = useState([]);
     const [isFormValid, setIsFormValid] = useState(false);
 
+    const listenForEnterKey=(event)=> {
+        if (event.keyCode === 13) {
+            onSubmitHandler(event)
+        }
+    }
+    
     const checkFormValidity = useCallback(() => {
         const newArray = [];
         wordsForm.forEach((item, i) => {
@@ -98,7 +104,7 @@ const WordInputForm = (props) => {
     }
 
     return (
-        <form onSubmit={onSubmitHandler} autoComplete={"off"}>
+        <form onKeyDown={listenForEnterKey} onSubmit={onSubmitHandler} autoComplete={"off"}>
             <div className={classes['language-container']}>
                 <h1>Choose Language</h1>
                 <div className={classes['language-buttons']}>
