@@ -27,7 +27,7 @@ const HomePage = () => {
     return (
         <>
             <Head>
-                <title>Ankiauto</title>
+                <title>Ankimate</title>
                 <meta name="description" content={"Add Cards to anki in a easier way"}
                 />
             </Head>

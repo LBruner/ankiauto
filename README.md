@@ -1,34 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Ankimate
 
-## Getting Started
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Description	
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+![Homepage](docs/homepage.png) 	
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+​	This is a react project that automates the process of getting phrases, context, phonetics and audio voice in order to creat languague studying flash cards on Anki. It runs on localhost for the time being and through Puppeteer it fetches data from Word refence dictionary.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+[Wordrefence]: https://www.wordreference.com/
 
-## Learn More
+### Card output example	
+![Card formatting example](docs/formatting-example.png)
 
-To learn more about Next.js, take a look at the following resources:
+### Instructions
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+​	In order to start the server, go to root folder and run 'npm run dev' on a terminal. Then go to http://localhost:3000/ to get to the app homepage. There, pick a deck, add the words you want to make a card of. Both meaning and phrase fields are optional, if empty the app will try to fetch it on the dictionary website.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+​	Currently, the project supports English and French language input to Brazilian Portuguese output. The cards are added to the decks with the name of 'English' or 'French'.
 
-## Deploy on Vercel
+​	Since the web scrape uses a browser, the app performance may depend on your computer specs.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+​	This app requires Ankiconnect extension in order to access Anki software API.	
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[Ankiconnect]: https://ankiweb.net/shared/info/2055492159
+
+### Features to be added
+
+​	Since this is a project for personal use, there are a few small improvements I'm working on. Deck selection, dark mode, detailed log notification but my main is to improve the code performance and readability. I know it has lots of flaws but this is a personal project and it works just fine for me right now. Any help to improve this app is appreciated.
