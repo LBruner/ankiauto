@@ -5,7 +5,7 @@ class MyDocument extends Document {
         return (
             <Html lang="pt">
                 <Head>
-                    <link rel="icon" href="../static/favicon.png"/>
+                    <link rel="icon" href="./favicon.png"/>
                 </Head>
                 <body>
                 <Main/>

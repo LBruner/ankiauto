@@ -1,13 +1,13 @@
-import WordInputForm from "../src/components/WordInputForm";
+import WordInputForm from "../../src/components/WordInputForm";
 import {useDispatch, useSelector} from "react-redux";
-import Card from "../src/components/Card";
+import Card from "../../src/components/Card";
 import Head from "next/head";
-import classes from '../src/components/loader.module.css'
-import Notification from "../src/UI/Notification";
+import classes from '../../src/components/loader.module.css'
+import Notification from "../../src/UI/Notification";
 import {useElapsedTime} from "use-elapsed-time";
 import {useEffect} from "react";
-import {uiActions} from "../src/components/store/UISlice";
-import Timer from "../src/UI/Timer";
+import {uiActions} from "../../src/components/store/UISlice";
+import Timer from "../../src/UI/Timer";
 
 const HomePage = () => {
     const isWaiting = useSelector(state => state.ui.isWaiting)
