@@ -41,6 +41,10 @@
     background-color: #ccc;
 }
 
+.invalid:hover{
+    cursor: not-allowed;
+}
+
 @media (max-width: 800px) {
     .language-buttons{
         width: 60%;

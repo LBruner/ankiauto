@@ -13,7 +13,7 @@ const Navbar = () => {
                 </div>
                 <div className={classes.options}>
                     <Link href={'/ankimate'}>Add Cards</Link>
-                    <Link href={'/stats'}>Stats</Link>
+                    <Link href={'/user'}>Stats</Link>
                 </div>
             </div>
         </nav>
