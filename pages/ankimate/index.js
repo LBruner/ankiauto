@@ -15,7 +15,7 @@ const HomePage = () => {
     const showNotification = useSelector(state => state.ui.showNotification)
     const { elapsedTime,reset } = useElapsedTime({ isPlaying: isWaiting})
     const dispatch = useDispatch();
-    
+
     useEffect(() => {
         if (isWaiting)
             dispatch(uiActions.setTimer({timer: fmtMSS(elapsedTime.toFixed(0))}))
