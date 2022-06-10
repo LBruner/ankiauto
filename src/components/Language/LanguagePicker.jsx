@@ -1,11 +1,18 @@
 import classes from "../WordInputForm.module.css";
+import userDecks from '../../../user/decks.json';
 
-const LanguagePicker = ({language, setLanguage}) => {
+const LanguagePicker = ({language, setLanguage, setDeck}) => {
     const onChangeInput = (e) => {
         const newLanguage = {...language};
 
         if (e.target.name === 'inputLanguage') {
+            const optionName = e.target[e.target.selectedIndex].text;
+
+            const hasDeck = userDecks.names.filter(item => item === optionName)
             newLanguage.input = e.target.value;
+
+            if (hasDeck.length !== 0)
+                setDeck(optionName)
         } else if (e.target.name === 'outputLanguage') {
             newLanguage.output = e.target.value;
         }

@@ -4,12 +4,13 @@ import axios from 'axios'
 import classes from './WordInputForm.module.css';
 import {useDispatch} from "react-redux";
 import {uiActions} from "./store/UISlice";
-import LanguagePicker from "./Language/LanguagePicker";
+import CardConfig from "./CardConfig";
 
 const WordInputForm = (props) => {
     const dispatch = useDispatch();
     const [wordsForm, setWordsForm] = useState([])
-    const [language, setLanguage] = useState({input: 'en', output: 'pt'});
+    const [language, setLanguage] = useState({input: 'en', output: 'pt',});
+    const [deck, setDeck] = useState('English');
     const [invalidIds, setInvalidIds] = useState([]);
     const [deletingIds, setDeletingIds] = useState([]);
     const [isFormValid, setIsFormValid] = useState(false);
@@ -42,7 +43,7 @@ const WordInputForm = (props) => {
         dispatch(uiActions.hideNotification())
         dispatch(uiActions.toggleIsWaiting());
         const url = '/api/addCards';
-        const words = {words: [...wordsForm], language};
+        const words = {words: [...wordsForm], language,deck};
         const response = await axios.post(url, words)
         const {data} = response;
         const errorNumber = data.cardsLog.errors.length;
@@ -96,7 +97,7 @@ const WordInputForm = (props) => {
 
     return (
         <form onKeyDown={listenForEnterKey} onSubmit={onSubmitHandler} autoComplete={"off"}>
-            <LanguagePicker language={language} setLanguage={setLanguage}/>
+            <CardConfig language={language} setLanguage={setLanguage} deck={deck} setDeck={setDeck}/>
             <WordInputList deletingIds={deletingIds} setDeletingIds={setDeletingIds} wordsForm={wordsForm}
                            setWordsForm={setWordsForm} invalidIds={invalidIds}/>
             <button className={`${classes['button-container']} ${!isFormValid ? classes['invalid'] : ''}`}
