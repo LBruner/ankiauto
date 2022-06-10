@@ -4,21 +4,22 @@ import axios from 'axios'
 import classes from './WordInputForm.module.css';
 import {useDispatch} from "react-redux";
 import {uiActions} from "./store/UISlice";
+import LanguagePicker from "./Language/LanguagePicker";
 
 const WordInputForm = (props) => {
     const dispatch = useDispatch();
     const [wordsForm, setWordsForm] = useState([])
-    const [language, setLanguage] = useState('english');
+    const [language, setLanguage] = useState({input: 'en', output: 'pt'});
     const [invalidIds, setInvalidIds] = useState([]);
     const [deletingIds, setDeletingIds] = useState([]);
     const [isFormValid, setIsFormValid] = useState(false);
 
-    const listenForEnterKey=(event)=> {
+    const listenForEnterKey = (event) => {
         if (event.keyCode === 13) {
             onSubmitHandler(event)
         }
     }
-    
+
     const checkFormValidity = useCallback(() => {
         const newArray = [];
         wordsForm.forEach((item, i) => {
@@ -32,16 +33,6 @@ const WordInputForm = (props) => {
     useEffect(() => {
         checkFormValidity();
     }, [wordsForm]);
-    
-    const selectEnglish = (e) => {
-        e.preventDefault();
-        setLanguage('english')
-    }
-
-    const selectFrench = (e) => {
-        e.preventDefault();
-        setLanguage('french')
-    }
 
     const onSubmitHandler = async (e) => {
         e.preventDefault()
@@ -51,14 +42,14 @@ const WordInputForm = (props) => {
         dispatch(uiActions.hideNotification())
         dispatch(uiActions.toggleIsWaiting());
         const url = '/api/addCards';
-        const words = {words: [...wordsForm], language: language};
+        const words = {words: [...wordsForm], language};
         const response = await axios.post(url, words)
         const {data} = response;
         const errorNumber = data.cardsLog.errors.length;
         const successNumber = data.cardsLog.successful.length;
-        
+
         props.resetTimer(0);
-        
+
         if (errorNumber === 0) {
             dispatch(uiActions.showNotification(
                 {
@@ -88,7 +79,7 @@ const WordInputForm = (props) => {
                 }))
         }
         let deleteIds = []
-        
+
         const newFormArray = wordsForm.filter((word, i) => {
             if (!data.cardsLog.successful.includes(word.word)) {
                 return true
@@ -97,26 +88,17 @@ const WordInputForm = (props) => {
                 return false
             }
         })
-        if(deleteIds.length !== 0) setDeletingIds(deleteIds);
-        
+        if (deleteIds.length !== 0) setDeletingIds(deleteIds);
+
         setWordsForm(newFormArray)
         dispatch(uiActions.toggleIsWaiting());
     }
 
     return (
         <form onKeyDown={listenForEnterKey} onSubmit={onSubmitHandler} autoComplete={"off"}>
-            <div className={classes['language-container']}>
-                <h1>Choose Language</h1>
-                <div className={classes['language-buttons']}>
-                    <button onClick={selectEnglish}
-                            className={language === 'english' ? classes['selected-language'] : ''}>English
-                    </button>
-                    <button onClick={selectFrench}
-                            className={language === 'french' ? classes['selected-language'] : ''}>French
-                    </button>
-                </div>
-            </div>
-            <WordInputList deletingIds={deletingIds} setDeletingIds={setDeletingIds} wordsForm={wordsForm} setWordsForm={setWordsForm} invalidIds={invalidIds}/>
+            <LanguagePicker language={language} setLanguage={setLanguage}/>
+            <WordInputList deletingIds={deletingIds} setDeletingIds={setDeletingIds} wordsForm={wordsForm}
+                           setWordsForm={setWordsForm} invalidIds={invalidIds}/>
             <button className={`${classes['button-container']} ${!isFormValid ? classes['invalid'] : ''}`}
                     type={"submit"}>Add Cards
             </button>
