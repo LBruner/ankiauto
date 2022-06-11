@@ -10,7 +10,7 @@ export default async function handler(req, res) {
 
         
         const data = JSON.parse(decks);
-        if (data.names.length === 0)
+        if (data.allDecks.length === 0)
             await fetchDecks();
         
         res.json(decks);

@@ -8,7 +8,7 @@ const LanguagePicker = ({language, setLanguage, setDeck}) => {
         if (e.target.name === 'inputLanguage') {
             const optionName = e.target[e.target.selectedIndex].text;
 
-            const hasDeck = userDecks.names.filter(item => item === optionName)
+            const hasDeck = userDecks.allDecks.filter(item => item === optionName)
             newLanguage.input = e.target.value;
 
             if (hasDeck.length !== 0)
