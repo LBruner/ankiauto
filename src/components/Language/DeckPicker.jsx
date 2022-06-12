@@ -1,5 +1,6 @@
 import userDecks from '../../../user/decks.json';
 import {useEffect, useRef, useState} from "react";
+import classes from './DeckPicker.module.css'
 
 const DeckPicker = ({deck,setDeck}) => {
     const [filteredDeck, setFilteredDeck] = useState([...userDecks.allDecks || '']);
@@ -30,6 +31,7 @@ const DeckPicker = ({deck,setDeck}) => {
     
     return (
         <div>
+            <h1>Choose Deck</h1>
             <input ref={searchBoxRef} type="text" onChange={onSearchLanguage} placeholder={"Search..."} id={"search"}/>
             <select  ref={selectRef} onChange={onChangeDeck} value={deck} name="deck">
                 {filteredDeck.map(deckName => <option key={deckName} value={deckName}>{deckName}</option>)}

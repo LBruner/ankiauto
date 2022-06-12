@@ -1,5 +1,5 @@
-import classes from "../WordInputForm.module.css";
 import userDecks from '../../../user/decks.json';
+import classes from './LanguagePicker.module.css'
 
 const LanguagePicker = ({language, setLanguage, setDeck}) => {
     const onChangeInput = (e) => {
@@ -27,22 +27,22 @@ const LanguagePicker = ({language, setLanguage, setDeck}) => {
     }
 
     return (<div className={classes['language-buttons']}>
-        <div className={classes['language-container']}>
-            <h1>Choose Language</h1>
-            <div className={classes.input}>
-                <select value={language.input} onChange={onChangeInput} name="inputLanguage" id="">
-                    <option value="pt">Portuguese</option>
-                    <option value="en">English</option>
-                    <option value="fr">French</option>
-                </select>
-            </div>
-            <div className={classes.output}>
-                <select value={language.output} onChange={onChangeInput} name="outputLanguage" id="">
-                    <option value="pt">Portuguese</option>
-                    <option value="en">English</option>
-                    <option value="fr">French</option>
-                </select>
-            </div>
+        <h1>Choose Language</h1>
+        <div className={classes.input}>
+        <p>Input</p>
+            <select className={classes.input} value={language.input} onChange={onChangeInput} name="inputLanguage" id="">
+                <option value="pt">Portuguese</option>
+                <option value="en">English</option>
+                <option value="fr">French</option>
+            </select>
+        </div>
+        <div className={classes.output}>
+            <p>Output</p>
+            <select value={language.output} onChange={onChangeInput} name="outputLanguage" id="">
+                <option value="pt">Portuguese</option>
+                <option value="en">English</option>
+                <option value="fr">French</option>
+            </select>
         </div>
     </div>);
 }

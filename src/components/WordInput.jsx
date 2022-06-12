@@ -27,7 +27,7 @@ const WordInput = (props) => {
 
     return (
         <div className={classes['cell-container']}>
-            <input onChange={onChangeHandler} type="text" tabIndex={1} className={isInvalid ? classes['not-valid'] : '' }  ref={input} placeholder={"Word..."}
+            <input onDrop={onChangeHandler} onChange={onChangeHandler} type="text" tabIndex={1} className={isInvalid ? classes['not-valid'] : '' }  ref={input} placeholder={"Word..."}
             /> 
             <input onChange={onChangeHandler} type="text" tabIndex={1} ref={phrase} placeholder={"Phrase..."}
             />

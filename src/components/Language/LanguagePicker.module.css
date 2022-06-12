@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Oxygen&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+.language-buttons{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 280px;
+}
+
+.language-buttons div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.language-buttons p{
+    font-family: 'Montserrat', serif;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.language-buttons select{
+    width: 70%;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 18px;
+}
+
+.input select{
+    font-family: 'Montserrat', serif;
+    background-color: #acacac38;
+    font-weight: 500;
+}
+
+.output select{
+    background-color: #acacac38;
+    font-weight: 500;
+}
+/*.language-buttons select:*/
