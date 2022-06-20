@@ -1,7 +1,7 @@
 .cell-container{
     display: grid;
     grid-template-columns: 15% 60% 15% 10%;
-    width: 70%;
+    width: 100%;
     font-size: 18px;
 }
 

@@ -96,13 +96,14 @@ const WordInputForm = (props) => {
     }
 
     return (
-        <form onKeyDown={listenForEnterKey} onSubmit={onSubmitHandler} autoComplete={"off"}>
+        <form className={classes['form-container']} onKeyDown={listenForEnterKey} onSubmit={onSubmitHandler} autoComplete={"off"}>
             <CardConfig language={language} setLanguage={setLanguage} deck={deck} setDeck={setDeck}/>
             <WordInputList deletingIds={deletingIds} setDeletingIds={setDeletingIds} wordsForm={wordsForm}
-                           setWordsForm={setWordsForm} invalidIds={invalidIds}/>
-            <button className={`${classes['button-container']} ${!isFormValid ? classes['invalid'] : ''}`}
-                    type={"submit"}>Add Cards
-            </button>
+                           setWordsForm={setWordsForm} invalidIds={invalidIds}
+                           isFormValid={isFormValid} onButtonSubmit={onSubmitHandler}
+                           class={classes['button-container']} invalidClass={classes['invalid']}
+            />
+            
         </form>)
 }
 

@@ -1,12 +1,19 @@
 .form-container{
     display: grid;
     grid-auto-rows: auto;
-    grid-auto-columns:70%;
+    grid-auto-columns: 100%;
     align-content: center;
     justify-content: center;
     align-items: center;
-    grid-gap: 10px;
+    grid-gap: 11px;
+    margin-top: 106px;
+    margin-right: 46px;
+    flex-grow: 0.1;
     justify-items: center;
+}
+
+.form-container h1{
+    margin-bottom: 50px;
 }
 
 @media (max-width: 800px) {

@@ -33,7 +33,6 @@ const WordInputList = (props) => {
         props.setDeletingIds(null);
         setWordInputCount(newArray)
     }}, [props.deletingIds]);
-    
 
     const isFirstElement = (curInput) => {
         return wordInputCount[0] === curInput && wordInputCount.length <= 1
@@ -48,8 +47,12 @@ const WordInputList = (props) => {
 
     return (
         <div className={classes['form-container']}>
+            <h1>Words</h1>
             {render
             }
+            <button onClick={props.onSubmitHandler} className={`${props.class} ${!props.isFormValid ? props.invalidClass : ''}`}
+                                type={"submit"}>Add Cards
+            </button>
         </div>
     )
 }

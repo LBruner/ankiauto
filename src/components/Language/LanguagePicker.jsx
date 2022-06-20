@@ -27,10 +27,10 @@ const LanguagePicker = ({language, setLanguage, setDeck}) => {
     }
 
     return (<div className={classes['language-buttons']}>
-        <h1>Choose Language</h1>
         <div className={classes.input}>
-        <p>Input</p>
-            <select className={classes.input} value={language.input} onChange={onChangeInput} name="inputLanguage" id="">
+            <p>Input</p>
+            <select className={classes.input} value={language.input} onChange={onChangeInput} name="inputLanguage"
+                    id="">
                 <option value="pt">Portuguese</option>
                 <option value="en">English</option>
                 <option value="fr">French</option>

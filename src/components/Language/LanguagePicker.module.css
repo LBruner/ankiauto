@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
 .language-buttons{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     max-height: 280px;
 }
@@ -21,7 +21,8 @@
 }
 
 .language-buttons select{
-    width: 70%;
+    min-width: 80%;
+    width: 80%;
     padding: 10px;
     border-radius: 4px;
     font-size: 18px;

@@ -30,8 +30,8 @@ const DeckPicker = ({deck,setDeck}) => {
     </select>
     
     return (
-        <div>
-            <h1>Choose Deck</h1>
+        <div className={classes['deck-container']}>
+            <p>Choose Deck</p>
             <input ref={searchBoxRef} type="text" onChange={onSearchLanguage} placeholder={"Search..."} id={"search"}/>
             <select  ref={selectRef} onChange={onChangeDeck} value={deck} name="deck">
                 {filteredDeck.map(deckName => <option key={deckName} value={deckName}>{deckName}</option>)}

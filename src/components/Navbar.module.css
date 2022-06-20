@@ -6,6 +6,7 @@
     background-color: #323232;
     max-height: 60px;
     min-height: 60px;
+    position: fixed;
 }
 
 .brand{
