@@ -18,6 +18,12 @@ const WordInput = (props) => {
         if(!isInputAdded || props.isFirst){
             props.addInput()
             setIsInputAdded(true)
+            setTimeout(() =>{
+                window.scrollTo({
+                    top: window.scrollY + window.innerHeight,
+                    behavior: 'smooth'
+                })
+            }, 500)
         }
     }
 
