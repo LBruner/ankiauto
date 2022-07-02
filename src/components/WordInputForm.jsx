@@ -43,7 +43,7 @@ const WordInputForm = (props) => {
         dispatch(uiActions.hideNotification())
         dispatch(uiActions.toggleIsWaiting());
         const url = '/api/addCards';
-        const words = {words: [...wordsForm], language,deck};
+        const words = {words: [...wordsForm], language, deck};
         const response = await axios.post(url, words)
         const {data} = response;
         const errorNumber = data.cardsLog.errors.length;
@@ -94,16 +94,19 @@ const WordInputForm = (props) => {
         setWordsForm(newFormArray)
         dispatch(uiActions.toggleIsWaiting());
     }
-
+    const onDropHandler = (e) => {
+        console.log(e)
+    }
     return (
-        <form className={classes['form-container']} onKeyDown={listenForEnterKey} onSubmit={onSubmitHandler} autoComplete={"off"}>
+        <form onDrop={onDropHandler} className={classes['form-container']} onKeyDown={listenForEnterKey}
+              onSubmit={onSubmitHandler} autoComplete={"off"}>
             <CardConfig language={language} setLanguage={setLanguage} deck={deck} setDeck={setDeck}/>
             <WordInputList deletingIds={deletingIds} setDeletingIds={setDeletingIds} wordsForm={wordsForm}
                            setWordsForm={setWordsForm} invalidIds={invalidIds}
                            isFormValid={isFormValid} onButtonSubmit={onSubmitHandler}
                            class={classes['button-container']} invalidClass={classes['invalid']}
             />
-            
+
         </form>)
 }
 

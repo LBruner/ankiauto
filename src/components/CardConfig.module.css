@@ -11,3 +11,11 @@
 .config-group{
     width: 100%;
 }
+
+@media (max-width: 800px) {
+    .config-container{
+        position: relative;
+        left: inherit;
+        margin: 70px 100px 10px;
+    }
+}

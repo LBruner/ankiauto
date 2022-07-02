@@ -8,16 +8,18 @@
     grid-gap: 11px;
     margin-top: 106px;
     margin-right: 46px;
+    margin-bottom: 10px;
     flex-grow: 0.1;
     justify-items: center;
 }
 
 .form-container h1{
-    margin-bottom: 50px;
+    /*margin-bottom: 50px;*/
 }
 
 @media (max-width: 800px) {
     .form-container{
+        margin: 0;
         grid-auto-columns:95%;
     }
 }

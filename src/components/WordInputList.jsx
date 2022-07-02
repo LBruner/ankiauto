@@ -28,11 +28,11 @@ const WordInputList = (props) => {
     }
 
     useEffect(() => {
-    if(props.deletingIds){
-        const newArray = wordInputCount.filter((word,i) => !props.deletingIds.includes(i))
-        props.setDeletingIds(null);
-        setWordInputCount(newArray)
-    }}, [props.deletingIds]);
+        if(props.deletingIds){
+            const newArray = wordInputCount.filter((word,i) => !props.deletingIds.includes(i))
+            props.setDeletingIds(null);
+            setWordInputCount(newArray)
+        }}, [props.deletingIds]);
 
     const isFirstElement = (curInput) => {
         return wordInputCount[0] === curInput && wordInputCount.length <= 1
@@ -51,7 +51,7 @@ const WordInputList = (props) => {
             {render
             }
             <button onClick={props.onSubmitHandler} className={`${props.class} ${!props.isFormValid ? props.invalidClass : ''}`}
-                                type={"submit"}>Add Cards
+                    type={"submit"}>Add Cards
             </button>
         </div>
     )

@@ -2,6 +2,7 @@
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    margin-bottom: 10px;
 }
 
 .button-container{
@@ -62,5 +63,10 @@
     }
     .button-container{
         width: 95%;
+    }
+    .form-container{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
     }
 }
