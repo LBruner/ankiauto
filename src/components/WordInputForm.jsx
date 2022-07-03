@@ -92,6 +92,7 @@ const WordInputForm = (props) => {
         if (deleteIds.length !== 0) setDeletingIds(deleteIds);
 
         setWordsForm(newFormArray)
+        dispatch(uiActions.setFieldCount({fieldCount : wordsForm.length}))
         dispatch(uiActions.toggleIsWaiting());
     }
     const onDropHandler = (e) => {

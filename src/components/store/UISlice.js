@@ -6,7 +6,8 @@ const uiSlice = createSlice({
         showNotification: false,
         isWaiting: false,
         useDarkMode: false,
-        timer: 0
+        timer: 0,
+        fieldCount: 0
     }, reducers: {
         showNotification(state, action) {
             state.showNotification = true;
@@ -22,7 +23,10 @@ const uiSlice = createSlice({
         },
         setTimer(state,action){
             state.timer = action.payload.timer;
-        }
+        },
+         setFieldCount(state,action){
+            state.fieldCount = action.payload.fieldCount;
+         }
     }
 })
 

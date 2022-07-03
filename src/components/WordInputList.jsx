@@ -2,15 +2,19 @@ import {useEffect, useState} from "react";
 import nextId from "react-id-generator";
 import WordInput from "./WordInput";
 import classes from './WordInputList.module.css'
+import {useDispatch} from "react-redux";
+import {uiActions} from "./store/UISlice";
 
 const WordInputList = (props) => {
     const {wordsForm, setWordsForm} = props;
     const [wordInputCount, setWordInputCount] = useState([''])
-
+    const dispatch = useDispatch();
+    
     const onUpdateWord = (input, index) => {
         let newArray = [...wordsForm];
         newArray[index] = input;
         setWordsForm(newArray)
+        dispatch(uiActions.setFieldCount({fieldCount : wordsForm.length}))
     }
 
     const addInput = () => {
@@ -25,6 +29,7 @@ const WordInputList = (props) => {
         let newFormArray = [];
         newFormArray = wordsForm.filter((item, i) => i !== index)
         setWordsForm(newFormArray);
+        dispatch(uiActions.setFieldCount({fieldCount : wordsForm.length}))
     }
 
     useEffect(() => {

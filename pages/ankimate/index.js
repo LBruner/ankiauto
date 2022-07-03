@@ -13,7 +13,7 @@ const HomePage = () => {
     const isWaiting = useSelector(state => state.ui.isWaiting)
     const notification = useSelector(state => state.ui.activeNotification)
     const showNotification = useSelector(state => state.ui.showNotification)
-    const { elapsedTime,reset } = useElapsedTime({ isPlaying: isWaiting})
+    const {elapsedTime, reset} = useElapsedTime({isPlaying: isWaiting})
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -24,7 +24,7 @@ const HomePage = () => {
     function fmtMSS(s) {
         return (s - (s %= 60)) / 60 + (9 < s ? ':' : ':0') + s
     }
-    
+
     return (
         <>
             <Head>
